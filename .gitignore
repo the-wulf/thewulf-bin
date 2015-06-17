@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cd]
+.git/
+.vagrant/
+.ropeproject/
