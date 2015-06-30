@@ -1,0 +1,22 @@
+{
+  "concert_title": "uhhh",
+  "concert_date": "2015_12_21",
+  "curators": [
+    {"name": "andrew yong", "email": "tim@rim.com"}
+  ],
+  "works": [
+    {
+      "title": "a title",
+      "composers": [
+        {"name": "randy yong", "email": "tric@track.org"}
+      ],
+      "performers": [
+        {"name": "trip fisherman", "email": "trip@lovesfishing.io", "instruments": ["boat", "workout"]}
+      ],
+      "allow_streaming": "No",
+      "allow_download": "No",
+      "start_time": "02:50:10",
+      "end_time": "02:59:50"
+    }
+  ]
+}

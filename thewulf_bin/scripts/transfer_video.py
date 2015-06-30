@@ -6,7 +6,7 @@ import argparse
 from mimetypes import guess_type
 
 
-if __name__ == "__main__":
+def run():
     parser = argparse.ArgumentParser(
         description="Upload a batch of videos to the wulf. server."
     )

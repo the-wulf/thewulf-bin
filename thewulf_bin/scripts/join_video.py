@@ -17,25 +17,6 @@ import re
 import subprocess
 
 OUTPUT_FORMAT = ".MOV"
-WEB_VIDEO_FORMATS = [".ogv", ".mp4", ".webm"]
-WEB_AUDIO_FORMATS = [".mp3", ".ogg"]
-
-FFMPEG_CONVERSIONS = {
-    ".ogv": "ffmpeg -i %s -q 5 -pix_fmts yuv420p -acodec libvorbis -vcodec"
-    " libtheora -c:a copy %s",
-
-    ".mp4": "ffmpeg -i %s -vcodec libx264 -pix_fmts yuv420p -profile:v baseline"
-    " -present slower -crf 18 -vf \"scale=trunc(in_w/2)*2:trunc(in_h/2)*2\" "
-    "-c:a copy %s",
-
-    ".webm": "ffmpeg -i %s -c:v libvpx -c:a libvorbis -pix_fmts yuv420p "
-    "-quality good -b:v 2M -crf 5 \"scale=trunc(in_w/2)*2:trunc(in_h/2)*2\" "
-    "-c:a copy %s",
-
-    ".mp3": "ffmpeg -i %s -acodec libmp3lame -q:a 0 -map 0:a:0 %s",
-    ".ogg": "ffmpeg -i %s -acodec libvorbis -q:a 10 -map 0:a:0 %s",
-}
-
 
 def _sort_dir(directory, extension=""):
     """unfortunately directories are not inherently sorted in the way our Zoom
@@ -95,23 +76,20 @@ def main(directory, event_date, remote_dir='', concat_func=concat_video):
                      + ("-"*20) + "\n")
     video, tmpfile, pieces = concat_func(directory, event_date)
 
-if __name__ == '__main__':
+def run():
     import argparse
     parser = argparse.ArgumentParser(
-        description='concatinate all video files in a directory.')
-    parser.add_argument('--local_dir',
-                        help='full filepath to directory containing videos')
-    parser.add_argument('--event_date',
-                        help='date of the event in format YYYY_MM_DD')
-    parser.add_argument('--remote_dir',
-                        help='full filepath to event directory')
+        description='concatinate all video files in a directory.'
+    )
+    parser.add_argument(
+        'local_dir',
+        help='full filepath to directory containing videos'
+    )
+    parser.add_argument(
+        'event_date',
+        help='date of the event in format YYYY_MM_DD'
+    )
     args = parser.parse_args()
-
-    if not args.event_date:
-        raise ValueError('must provide an event date --event_date YYYY_MM_DD.')
-
-    if not (args.local_dir and args.event_date and args.remote_dir):
-        raise ValueError('missing arguments. try join_video --help for usage.')
 
     if not re.match(r'^\d{4}_\d{2}_\d{2}', args.event_date):
         raise AssertionError('invalide date format. please use YYYY_MM_DD.')
