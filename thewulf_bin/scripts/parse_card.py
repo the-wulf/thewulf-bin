@@ -116,3 +116,26 @@ class Card(object):
             self._has_errors = False
         return self._has_errors
 
+
+def run():
+    import argparse
+    import os.path
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "filepath",
+        help="path to the card you would like to review. for syntax errors."
+    )
+    parser.add_argument(
+        "--notstrict",
+        default=False,
+        action="store_true",
+        help="tell the parser to not be so strict about certain syntax errors."
+    )
+
+    args = parser.parse_args()
+    if not os.path.exists(args.filepath):
+        raise OSError("File at {0} does not exist.".format(args.filepath))
+
+    card = Card(args.filepath, args.notstrict)
+    data = card.data  # this will check for syntax errors
+

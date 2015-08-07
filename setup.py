@@ -20,6 +20,7 @@ setup(
         "console_scripts": [
             "join_video = thewulf_bin.scripts.join_video:run",
             "transfer_video = thewulf_bin.scripts.transfer_video:run"
+            "check_card = thewulf_bin.scripts.parse_card:run"
         ]
     }
 )
